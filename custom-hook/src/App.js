@@ -1,23 +1,31 @@
 import logo from './logo.svg';
 import './App.css';
+import {useRef, useState} from "react";
 
 function App() {
+  const [value, setValue] =  useState('');
+
+  const isValid = (value) => value.length <10 ;
+
+  const onClick = () => {
+    console.log(value);
+  };
+
+  const onChange = (e) => {
+    const { value } = e.target;
+
+    let willUpdate = true;
+    willUpdate = isValid(value);
+
+    if(willUpdate) {
+      setValue(value);
+    }
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <input placeholder='name' onChange={onChange} value={value}/>
+      <button onClick={onClick} />
     </div>
   );
 }
