@@ -1,18 +1,16 @@
-import logo from './logo.svg';
 import './App.css';
-import {useRef, useState} from "react";
+import {useState} from "react";
 
-const useInput = () => {
+const useInput = (validator) => {
   const [value, setValue] =  useState('');
-
-  const isValid = (value) => value.length <10 ;
 
   const onChange = (e) => {
     const { value } = e.target;
 
     let willUpdate = true;
-    willUpdate = isValid(value);
-
+    if(typeof validator === 'function'){
+      willUpdate = isValid(value);
+    }
     if(willUpdate) {
       setValue(value);
     }
@@ -23,7 +21,9 @@ const useInput = () => {
 
 function App() {
 
-  const { value, onChange } = useInput();
+  const maxLen = (value) => value.length <10;
+  const { value, onChange } = useInput(maxLen);
+
 
   const onClick = () => {
     console.log(value);
